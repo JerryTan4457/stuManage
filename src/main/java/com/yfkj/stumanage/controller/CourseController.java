@@ -95,7 +95,7 @@ public class CourseController {
     }
 
     /*
-     * 添加保存
+     * 添加并保存
      */
     @RequestMapping("/addSave")
     public String addSave(Model model, @ModelAttribute("entity") @Valid Course entity, BindingResult bindingResult){
