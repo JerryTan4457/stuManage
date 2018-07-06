@@ -1,0 +1,38 @@
+<html>
+<head>
+    <SCRIPT language="javascript">
+        function changecols()
+        {
+            var temp=parent.document;
+            var fatherFrameset=parent.document.getElementById('fatherFrameset');
+            if(fatherFrameset.cols=="180,12,*")
+            {
+                fatherFrameset.cols="0,12,*";
+                document.getElementById("ImgArrow").src="$!request.getContextPath()/images/ar.gif";
+            }
+            else
+            {
+                fatherFrameset.cols="180,12,*";
+                document.getElementById("ImgArrow").src="$!request.getContextPath()/images/al.gif";
+            }
+        }
+    </SCRIPT>
+</head>
+<body topmargin="0" leftmargin="0">
+<TABLE cellSpacing="0" cellPadding="0" width="10" border="0" height="100%">
+    <tr>
+        <td width="12" background="$!request.getContextPath()/images/ab.gif"></td>
+    </tr>
+    <tr>
+        <td height="122" width="12">
+            <a href="javascript:changecols()">
+                <img src="$!request.getContextPath()/images/al.gif" border="0" id="ImgArrow" name="ImgArrow">
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td background="$!request.getContextPath()/images/ab.gif" width="12"></td>
+    </tr>
+</TABLE>
+</body>
+</html>

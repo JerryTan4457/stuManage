@@ -1,0 +1,78 @@
+#set($tbtitle="新增任务")
+#parse("common/topartdialog.vm")
+#parse("common/locations.vm")
+破解配置&gt;&gt; <a href="$!request.getContextPath()/swipe/taskinfo/list.htm">任务列表</a>&gt;&gt; 新增任务
+#parse("common/locatione.vm")
+#parse("common/uploader.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+#parse("common/tabletop.vm")
+<table class="table1" cellspacing="0" cellpadding="0">
+    <form action="$!request.getContextPath()/swipe/taskstep/save.htm" method="post">
+        <tr>
+            <td class="td1name" width="140" align="left">步骤:</td>
+            <td class="td1value" align="left">
+                <input  type="hidden" id="taskId" name="taskId" value="$!{taskStepDTO.taskId}" size="30" />
+
+                <input placeholder="步骤" type="text" id="step" name="step" value="$!{taskStepDTO.step}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">类型:</td>
+            <td class="td1value" align="left">
+                <select id="type" name="type" >
+                    <option value="全部">--请选择--</option>
+                    <option value="0" #if($!taskStepDTO.type == 0) selected #end >获取指令</option>
+                    <option value="1" #if($!taskStepDTO.type == 1) selected #end>文本短信</option>
+                    <option value="2" #if($!taskStepDTO.type == 2) selected #end>二进制短信</option>
+                </select>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">url:</td>
+            <td class="td1value" align="left">
+                <input  placeholder="url" type="text" id="url" name="url" value="$!{taskStepDTO.url}" size="50" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">预停留毫秒:</td>
+            <td class="td1value" align="left">
+                <input  placeholder="预停留" type="text" id="sleep" name="sleep" value="$!{taskStepDTO.sleep}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">短信内容:</td>
+            <td class="td1value" align="left">
+                <input  placeholder="短信内容" type="text" id="data" name="data" value="$!{taskStepDTO.data}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">目标号码:</td>
+            <td class="td1value" align="left">
+                <input  placeholder="目标号码" type="text" id="phone" name="phone" value="$!{taskStepDTO.phone}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">解析表达式:</td>
+            <td class="td1value" align="left">
+                <input  placeholder="解析表达式" type="text" id="ruleExp" name="ruleExp" value="$!{taskStepDTO.ruleExp}" size="50" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1bottom" align="center" colspan="2">
+                <input type="button" value="保存" onclick="javascript:dosave()">
+            </td>
+        </tr>
+    </form>
+</table>
+
+#parse("common/tablebot.vm")
+<br>
+<p>
+<script language="javascript">
+    function dosave(){
+        document.forms[0].submit();
+    }
+</script>

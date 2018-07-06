@@ -1,0 +1,71 @@
+#set($tbtitle="服务器列表")
+#set($queryUrl="$!request.getContextPath()/pjtrans/monitor/queue/list.htm")
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+破解配置&gt;&gt; <a href="$!request.getContextPath()/pjtrans/servers/list.htm">服务器列表</a>
+#parse("common/locatione.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+
+#parse("common/tabletop.vm")
+<form action="" method="post" name="form1">
+    <table class="table1" cellspacing="0" cellpadding="0">
+
+            <tr>
+
+                <td class="td1title2" align="center" nowrap>
+                    机器编号
+                </td>
+
+                <td class="td1title2" align="center" nowrap>
+                    内网ip
+                </td>
+
+                <td class="td1title2" align="center" nowrap>
+                    状态
+                </td>
+
+                <td class="td1title2" align="center" nowrap>
+                    操作
+                </td>
+            </tr>
+            #foreach($item in $datas)
+                <tr>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.hostname
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.innerIp
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        #if($item.status==1)
+                           停用
+                        #end
+                        #if($item.status==2)
+                            启用
+                        #end
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        #if($item.status==1)
+                            <a href="$!request.getContextPath()/pjtrans/servers/start.htm?hostname=${item.hostname}&ip=${item.innerIp}">启用</a>&nbsp;
+                            <a href="$!request.getContextPath()/pjtrans/servers/remove.htm?hostname=${item.hostname}&ip=${item.innerIp}">永久移除</a>&nbsp;
+                        #end
+                        #if($item.status==2)
+                            <a href="$!request.getContextPath()/pjtrans/servers/stop.htm?hostname=${item.hostname}&ip=${item.innerIp}">停用</a>&nbsp;
+                        #end
+                    </td>
+                </tr>
+            #end
+            <tr>
+                <td colspan="14" class="td1bottom">
+                    &nbsp;
+                </td>
+            </tr>
+
+    </table>
+</form>
+
+<br>
+<p>
+#parse("common/bottom.vm")

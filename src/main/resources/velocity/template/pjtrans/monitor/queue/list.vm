@@ -1,0 +1,115 @@
+#set($tbtitle="任务上报列表")
+#set($queryUrl="$!request.getContextPath()/pjtrans/monitor/queue/list.htm")
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+破解配置&gt;&gt; <a href="$!request.getContextPath()/pjtrans/monitor/queue/list.htm">任务状况</a>&gt;&gt;
+#parse("common/locatione.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+<table class="tabletop">
+    <form action="$!request.getContextPath()/pjtrans/monitor/queue/list.htm" method="post" name="topform">
+        <tr>
+            <td class="tabletop" align="left">
+                机器:
+                <input type="text" placeholder="机器编号"  class="span2" #if($!query.taskId>0) value="$!query.taskId" #end name="taskId" id="taskId" />
+                &nbsp;&nbsp;
+                前<input type="text" placeholder=""  class="span2" #if($!query.startMinute>0) value="$!query.startMinute" #end name="startMinute" id="startMinute" />分钟
+                ~
+                前<input type="text" placeholder=""  class="span2" #if($!query.endMinute>0) value="$!query.endMinute" #end  id="endMinute" />分钟
+
+                <input type="submit" value="提交">
+            </td>
+        </tr>
+    </form>
+</table>
+#if(${page.total} != 0)
+    #parse("common/pages.vm")
+    <input type="hidden" name="taskId" value="$!{query.taskId}">
+    <input type="hidden" name="startMinute" value="$!{query.startMinute}">
+    <input type="hidden" name="endMinute" value="$!{query.endMinute}">
+    #parse("common/pagee.vm")
+#end
+
+#parse("common/tabletop.vm")
+<form action="" method="post" name="form1">
+    <table class="table1" cellspacing="0" cellpadding="0">
+        #if(${page.totalCount} == 0)
+            <tr>
+                <td class="td1line1" colspan="8">
+                    暂时没有记录
+                </td>
+            </tr>
+        #else
+            <tr>
+                <td class="td1title2" align="center" nowrap>
+                    id
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    机器编号
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    公网ip
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    内网ip
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    音乐
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    动漫
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    视频
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    总数
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    上报时间
+                </td>
+            </tr>
+            #foreach($item in $page.itemList)
+                <tr>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.id
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.taskId
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.externalIp
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.internalIp
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.musicRun
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.cartoonRun
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.videoRun
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        ${item.totalRun}&nbsp;
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                       $!dateFormat.format('yyyy-MM-dd HH:mm:ss',$!{item.gmtCreate})&nbsp;
+                    </td>
+                </tr>
+            #end
+            <tr>
+                <td colspan="14" class="td1bottom">
+                    &nbsp;
+                </td>
+            </tr>
+        #end
+    </table>
+</form>
+
+<br>
+<p>
+#parse("common/bottom.vm")

@@ -1,0 +1,230 @@
+#set($tbtitle="按省份转化率")
+#set($imgServerUrl="http://121.43.110.174/picfs")
+#set($queryUrl="$!request.getContextPath()/trans/music/todayProvince.htm")
+
+<link rel="stylesheet" type="text/css" href="/search/jquery.searchableSelect.css">
+<script type="text/javascript" src="$!request.getContextPath()/search/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="$!request.getContextPath()/search/jquery.searchableSelect.js"></script>
+<script>
+    $(function(){
+        $("#appId").searchableSelect();
+    });
+    $(function(){
+        $("#amt").searchableSelect();
+    });
+    $(function(){
+        $("#provinceId").searchableSelect();
+    });
+</script>
+
+<script src="$!request.getContextPath()/My97DatePicker/calendar.js" type="text/javascript"></script>
+<script src="$!request.getContextPath()/My97DatePicker/config.js" type="text/javascript"></script>
+<script src="$!request.getContextPath()/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+实时转化率&gt;&gt; <a href="$!request.getContextPath()/trans/music/today.htm" onclick="lwindow=LockWindow()">返回</a>
+#parse("common/locatione.vm")
+#set($left="(")
+#set($right=")")
+
+##页面锁定js
+<script language="JavaScript">
+    var lwindow;
+    function LockWindow() {
+        var div = document.createElement("DIV");
+        div.id = "MzLockWindow_" + "_" + new Date().getTime();
+        with (div.style) {
+            zIndex = 10000;
+            top = "0px";
+            left = "0px";
+            width = "100%";
+            height = "100%";
+            border = "none";
+            margin = padding = 0;
+            position = "absolute";
+            backgroundImage = "url($!request.getContextPath()/images/wait.gif)";
+            backgroundRepeat = "no-repeat";
+            backgroundPositionX = "center";
+            backgroundpositionY = "center";
+            backgroundPosition = "center";
+            filter = "progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=60)";
+            backgroundColor = "white";
+            opacity = 0.3;
+            filter = "alpha(opacity=50)";
+            mozOpacity = 0.3;
+        }
+        document.body.insertBefore(div, document.body.firstChild);
+        return div;
+    }
+    function UnlockWindow(obj) {
+        if (obj) {
+            document.body.removeChild(obj);
+        }
+    }
+    window.onload=UnlockWindow(lwindow);
+</script>
+
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+<table class="tabletop">
+    <form action="$!request.getContextPath()/trans/music/todayProvince.htm" method="post" name="topform">
+        <tr>
+            <input type="hidden" name="userName" value="$!{query.userName}">
+            <td class="tabletop" align="left">
+                查看应用:
+                <select name="appId" id="appId" data-placeholder="--请选择--" style="width:180px;" >
+                    <option value="">--全部应用--</option>
+                    #foreach($item in $app.itemList)
+                        #if($item.id==$!query.choseAppId)
+                            <option selected="selected" value="$item.id">$item.cname$left$item.id$right</option>
+                        #else
+                            <option value="$item.id">$item.cname$left$item.id$right</option>
+                        #end
+                    #end
+                </select>
+                查看省份:
+                <select name="provinceId" id="provinceId" data-placeholder="--所有省份--" style="width:180px;" >
+                    <option value="">--所有省份--</option>
+                    #foreach($item in ${province.keySet()})
+                        #if($item==$!query.choseProvinceId)
+                            <option selected="selected" value="$item">${province.get($item)}</option>
+                        #else
+                            <option value="$item">${province.get($item)}</option>
+                        #end
+                    #end
+                </select>
+                资费:
+                <select name="amt" id="amt" data-placeholder="--所有资费--" style="width:20px;" >
+                    <option value=-1>--所有资费--</option>
+                    #foreach($item in $Amt)
+                        #if($item==$!query.choseAmt)
+                            <option selected="selected" value="$item">$item</option>
+                        #else
+                            <option value="$item">$item</option>
+                        #end
+                    #end
+                </select>
+                <input type="submit" value="提交" onclick="lwindow=LockWindow()">
+            </td>
+        </tr>
+    </form>
+</table>
+#if(${page.total} != 0)
+    #parse("common/pages.vm")
+##<input type="hidden" name="businerId" value="$!{query.businerId}">
+<input type="hidden" name="userName" value="$!{query.userName}">
+<input type="hidden" name="amt" value="$!{query.amt}">
+<input type="hidden" id="appId" name="appId" value="$!{query.choseAppId}"/>
+<input type="hidden" id="provinceId" name="provinceId" value="$!{query.choseProvinceId}"/>
+<input type="hidden" id="beginDate" name="beginDate" value="$!{query.beginDate}"/>
+<input type="hidden" id="endDate" name="endDate" value="$!{query.endDate}"/>
+    #parse("common/pagee.vm")
+#end
+
+#parse("common/tabletop.vm")
+<form action="" method="post" name="form1">
+    <table class="table1" cellspacing="0" cellpadding="0">
+        #if(${page.totalCount} == 0)
+            <tr>
+                <td class="td1line1" colspan="8">
+                    暂时没有记录
+                </td>
+            </tr>
+        #else
+            <tr>
+                <td class="td1title2" align="center" nowrap>
+                    应用名称
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    资费(分)
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    省份名称
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    用户数
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    请求次数
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    成功次数
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    信息费(元)
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    用户转化率
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    请求转化率
+                </td>
+            </tr>
+            #foreach($item in $page.itemList)
+                <tr>
+                    <td class="td1line1" align="center" nowrap>
+                        $!item.appName
+                    </td>
+                    <td class="td1line1" align="right" nowrap>
+                        $!numberFormat.format('###,###,##0',$!{item.amt})
+                    </td>
+                    <td class="td1line1" align="right" nowrap>
+                        $!item.provinceName
+                    </td>
+                    <td class="td1line1" align="right" nowrap>
+                        $!numberFormat.format('###,###,##0',$!{item.userNum})
+                    </td>
+                    <td class="td1line1" align="right" nowrap>
+                        $!numberFormat.format('###,###,##0',$!{item.reqNum})
+                    </td>
+                    <td class="td1line1" align="right" nowrap>
+                        $!numberFormat.format('###,###,##0',$!{item.transSucc})
+                    </td>
+                    <td class="td1line1" align="right" nowrap>
+                        $!numberFormat.format('###,###,##0.00',$!{item.interFee})
+                    </td>
+                    <td class="td1line1" align="right" nowrap>
+                        $!item.userRate%
+                    </td>
+                    <td class="td1line1" align="right" nowrap>
+                        $!item.transRate%
+                    </td>
+                </tr>
+            #end
+            <tr>
+                <td class="td1line1" align="right" nowrap colspan="3">
+                    <strong>$!total.appName</strong>
+                </td>
+                <td class="td1line1" align="right" nowrap>
+                    <strong>$!numberFormat.format('###,###,##0',$!total.userNum)</strong>
+                </td>
+                <td class="td1line1" align="right" nowrap>
+                    <strong>$!numberFormat.format('###,###,##0',$!total.reqNum)</strong>
+                </td>
+                <td class="td1line1" align="right" nowrap>
+                    <strong>$!numberFormat.format('###,###,##0',$!total.transSucc)</strong>
+                </td>
+                <td class="td1line1" align="right" nowrap>
+                    <strong>$!numberFormat.format('###,###,##0.00',$!total.interFee)</strong>
+                </td>
+                <td class="td1line1" align="right" nowrap>
+                    <strong>$!total.userRate%</strong>
+                </td>
+                <td class="td1line1" align="right" nowrap>
+                    <strong>$!total.transRate%</strong>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="12" class="td1bottom">
+                    &nbsp;
+                </td>
+            </tr>
+        #end
+    </table>
+</form>
+
+<br>
+<p>
+    #parse("common/bottom.vm")

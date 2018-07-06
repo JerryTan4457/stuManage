@@ -1,0 +1,10 @@
+#parse("common/lefttop.vm")
+<td nowrap valign="top">
+    #parse("template/pjconfig/region/city/treeurl.vm")
+    #parse("common/treetpl.vm")
+    <script language="JavaScript">
+        var treeItems = ${treeItems}
+
+        new tree (treeItems, tree_tpl);
+    </script>
+#parse("common/leftbottom.vm")

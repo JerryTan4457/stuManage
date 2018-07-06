@@ -1,0 +1,91 @@
+<html>
+<head>
+    <title>员工信息管理系统</title>
+    <script language="javascript">
+
+        if (window.top !== window.self){
+            window.top.location.href =  "$!request.getContextPath()/index.htm"
+        }
+        function focusNext(event)
+        {
+            if (event.keyCode==13)
+            {
+                document.forms[0].password.focus();
+                return false;
+            }
+            return true;
+        }
+        function chkpwd(event)
+        {
+            if (event.keyCode==13)
+            {
+                openwin();
+                return false;
+            }
+            return true;
+        }
+        function openwin()
+        {
+
+            document.forms[0].submit();
+            //window.open("blank.html","blanks","top=0,left=0,toolbar=no,location=no, directories=no,status=yes,menubar=no,scrollbars=no,resizable=yes");
+            //setTimeout('timeover()',50);
+        }
+        function timeover()
+        {
+            if(document.forms[0].sus.value=="yes")
+            {
+                window.opener=null;
+                self.close();
+            }
+            else
+            {
+                setTimeout('timeover()',50);
+            }
+        }
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="$!request.getContextPath()/common/common.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<br><br>
+<table width="500" height="300" border="0" align="center" cellpadding="0" cellspacing="0" background="$!request.getContextPath()/images/unicap/images/dl.jpg">
+    <form method="post" name="logon" action="$!request.getContextPath()/login/logins.htm">
+        <input type="hidden" name="sus">
+        <tr>
+            <td height="144"></td>
+        </tr>
+        <tr>
+            <td>&nbsp; &nbsp; </td>
+        </tr>
+        <tr>
+            <td> </td>
+        </tr>
+        <tr>
+            <td height="51">
+                <table width="100%" cellspacing="0" >
+                    <tr>
+                        <td width="25%" height="38">&nbsp;</td>
+                        <td width="32%" valign="center">
+                            <input name="phone" type="text" class="formgreen" onMouseOver="this.focus();" onFocus="this.select();" onkeypress="return focusNext(event);" style="width:75px; height:14px; " size="10">
+                        </td>
+                        <td width="21%" valign="center">
+                            <input name="password" type="password" class="formgreen" onMouseOver="this.focus();" onFocus="this.select();" onkeypress="return chkpwd(event);" style="width:75px; height:14px;" size="10">
+                        </td>
+                        <td width="22%" valign="center">
+                            <a href="javascript:openwin()">
+                                <img src="$!request.getContextPath()/images/zddl.jpg" width="42" height="19" border="0">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </form>
+</table>
+<div align="center"><br>
+    <font class="error">$!{message}</font><p>
+</div>
+<p>
+</body>
+</html>

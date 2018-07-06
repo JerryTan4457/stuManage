@@ -1,0 +1,61 @@
+#set($tbtitle="新增系统")
+#set($imgServerUrl="http://121.43.110.174/picfs")
+#set($uploadField="#imgUrl")
+#parse("common/topartdialog.vm")
+#parse("common/locations.vm")
+权限管理&gt;&gt; <a href="$!request.getContextPath()/auth/system/list.htm">系统列表</a>&gt;&gt; 新增系统
+#parse("common/locatione.vm")
+#parse("common/uploader.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+#parse("common/tabletop.vm")
+<table class="table1" cellspacing="0" cellpadding="0">
+    <form action="$!request.getContextPath()/auth/system/modify.htm" method="post">
+        <input type="hidden" name="id" value="$!{system.id}">
+        <tr>
+            <td class="td1name" width="140" align="left">名称:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="name" name="name" value="$!{system.name}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">编码:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="code" name="code" value="$!{system.code}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">访问路径:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="domainPath" name="domainPath" value="$!{system.domainPath}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">扩展路径:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="extdomainPath" name="extdomainPath" value="$!{system.extdomainPath}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">备注:</td>
+            <td class="td1value" align="left">
+                <textarea id="memo" name="memo"   style="width: 240px;height: 80px">$!{system.memo}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="td1bottom" align="center" colspan="2">
+                <input type="button" value="保存" onclick="javascript:dosave()">
+            </td>
+        </tr>
+    </form>
+</table>
+
+#parse("common/tablebot.vm")
+<br>
+<p>
+<script language="javascript">
+    function dosave(){
+        document.forms[0].submit();
+    }
+</script>

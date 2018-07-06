@@ -1,0 +1,25 @@
+<!--左侧开始-->
+<td class="main_left" valign="top" id="contentid">
+    <div class="left_tt">业务功能</div>
+    <div id="firstpane" class="menu_list"> <!--Code for menu starts here-->
+        #foreach($application in $applicationResurce)
+            <div class="menu_head"><p class="head_tt">$!application.name</p></div>
+            <ul class="menu_body">
+                #foreach($!resurce in $!application.resurceList)
+                   <li><a id="$!resurce.resourceCode" href="javascript:iFrameJumpPage('$!{application.domainPath}$!{resurce.urlpath}','$!resurce.resourceCode');">$!resurce.resourceName </a></li>
+                #end</dd>
+            </ul>
+        #end
+    </div>
+
+
+</td>
+<!--左侧收起按钮-->
+<td class="side_bar"><a class="set_bar" id="showtext" onClick="showdiv('contentid','showtext')"><img src="$!request.getContextPath()/images/kb.gif" width="10" height="83" /></a></td>
+
+<script>
+    function iFrameJumpPage(url,id)
+    {
+        $("#RightIFrame").attr("src",url);
+    }
+</script>

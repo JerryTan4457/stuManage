@@ -1,0 +1,89 @@
+#if (${page})
+<script type="text/javascript">
+	function gotoPageCheck(page,pages,event) {
+		var eventObj = event || window.event;
+		if(eventObj.keyCode==13 && (page != '') && (/^[0-9]*$/).test(page)) {
+			if (page > pages) {
+				page = pages;
+			}
+			gotoPage(page);
+		}
+	}
+</script>
+<div class="jk-box-center">
+
+    <div class="jk-page jk-page-center">
+#if (${page.totalPage} > 0) 
+        
+	    #set($start=${page.currentPage} - 2)
+	    #set($end=${page.currentPage} + 2)
+		
+		#if(${start}< 1)
+			#set($end = $end + 1 - $start)
+			#set($start=1)
+		#end
+
+		#if ($end > ${page.totalPage})
+			#set($start = $start - ($end - ${page.totalPage}))
+			#set($end=${page.totalPage})
+
+			#if(${start}< 1)
+					#set($start=1)
+			#end
+
+			#if(${end}< 1)
+					#set($end=1)
+			#end
+		#end
+
+
+		#if (${page.currentPage} != 1)
+            <a  href="javaScript:void(0)" onclick="gotoPage(1)">首页</a>
+            <a href="javaScript:void(0)" onclick="gotoPage(${page.currentPage}-1)">上一页</a>
+		#end
+		
+		#if ($start> 1) <a href="javaScript:void(0)" onclick="gotoPage(1)">1</a>
+			#if ($start> 2) <a href="javaScript:void(0)" onclick="gotoPage(2)">2</a><a>...</a>#end
+		#end
+		#foreach($i in [$start..$end])
+			#if($i==${page.currentPage})
+				<a class="active">$i</a>
+			#else
+				<a href="javaScript:void(0)" onclick="gotoPage($i)">$i</a>
+			#end
+		#end
+
+		#if ($end < ${page.totalPage})
+                <a>...</a>
+		#end
+		
+		#if (${page.currentPage} < ${page.totalPage}) 
+			<a  href="javaScript:void(0)" onclick="gotoPage(${page.currentPage}+1)">下一页</a>
+            <a  href="javaScript:void(0)" onclick="gotoPage(${page.totalPage})">末页</a>
+		#end
+
+		<span class="text">共$page.totalPage页</span>
+		##if (${page.totalPage} > 1)
+		  ##<em>去第</em><input type="text" class="w-45"  id="goOnPagnum" name="goOnPagnum"  maxlength="5" onkeydown="gotoPageCheck(this.value,$!{page.totalPage},event)"/><em>页</em>
+		##end
+	#end
+</div>
+    </div>
+#end
+##显示验证错误信息
+#macro(showValidateError $formModel $fieldName)
+    #if($!formModel)
+        #springBind($fieldName)
+    <span style="color: red"> $status.errorMessage </span>
+    #end
+#end
+
+##显示错误信息##
+#macro(showErrorMsg  $errorMsg )
+	#if($errorMsg)
+    <div class="alert alert-block">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4>错误!</h4>$errorMsg
+    </div>
+	#end
+#end

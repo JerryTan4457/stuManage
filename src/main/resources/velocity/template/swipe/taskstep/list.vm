@@ -1,0 +1,99 @@
+#set($tbtitle="任务步骤")
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+刷卡任务&gt;&gt; 任务步骤
+#if($taskInfoDTO.status == 0 || $taskInfoDTO.status == 2)
+  &gt;&gt; <a href="$!request.getContextPath()/swipe/taskstep/add.htm?taskId=${taskInfoDTO.id}">新增步骤</a>
+#end
+#parse("common/locatione.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+
+#parse("common/tabletop.vm")
+<form action="" method="post" name="form1">
+    <table class="table1" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="td1title2" align="center" nowrap>
+                    编号
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    步骤
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    类型
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    url
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    预停留时间
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    短信内容
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    目标号码
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    表达式
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    操作
+                </td>
+            </tr>
+            #foreach($item in $taskStepDTOList)
+                <tr>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.id
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.step
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        #if($item.type==0)
+                            获取指令
+                        #end
+                        #if($item.type==1)
+                            文本短信
+                        #end
+                        #if($item.type==2)
+                            二进制短信
+                        #end
+                    </td>
+                    <td class="td1line1" align="left"  width="20%">
+                        $!item.url
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        ${item.sleep}
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $!{item.data}
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $!{item.phone}
+                    </td>
+                    <td class="td1line1" align="left" width="20%">
+                        $!{item.ruleExp}
+                    </td>
+
+                    <td class="td1line1" align="center" nowrap>
+                         #if($taskInfoDTO.status == 0 || $taskInfoDTO.status == 2)
+                           <a href="$!request.getContextPath()/swipe/taskstep/edit.htm?id=${item.id}">编辑</a>
+                           <a href="$!request.getContextPath()/swipe/taskstep/del.htm?id=${item.id}">删除</a
+                         #end
+
+                    </td>
+                </tr>
+            #end
+            <tr>
+                <td colspan="10" class="td1bottom">
+                    &nbsp;
+                </td>
+            </tr>
+    </table>
+</form>
+
+<br>
+<p>
+#parse("common/bottom.vm")

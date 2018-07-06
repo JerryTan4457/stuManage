@@ -1,0 +1,66 @@
+#set($tbtitle="新增管理员")
+#set($imgServerUrl="http://121.43.110.174/picfs")
+#set($uploadField="#imgUrl")
+#parse("common/topartdialog.vm")
+#parse("common/locations.vm")
+权限管理&gt;&gt; <a href="$!request.getContextPath()/auth/user/list.htm">用户列表</a>&gt;&gt; 新增管理员
+#parse("common/locatione.vm")
+#parse("common/uploader.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+#parse("common/tabletop.vm")
+<table class="table1" cellspacing="0" cellpadding="0">
+    <form action="$!request.getContextPath()/auth/user/save.htm" method="post">
+        <tr>
+            <td class="td1name" width="140" align="left">手机号码:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="phone" name="phone" value="$!{adminUser.phone}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">用户名称:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="nick" name="username" value="$!{adminUser.username}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">用户姓名:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="fullName" name="fullName" value="$!{adminUser.fullName}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">用户密码:</td>
+            <td class="td1value" align="left">
+                <input type="password" id="password" name="password" value="$!{adminUser.password}" size="30" />
+            </td>
+        </tr>
+
+        <tr>
+            <td class="td1name" width="140" align="left">用户角色:</td>
+            <td class="td1value" align="left">
+                <select name="roleId" >
+                    #foreach($roleDTO in $roleList)
+                        <option value="$roleDTO.id" >$roleDTO.name</option>
+                    #end
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="td1bottom" align="center" colspan="2">
+                <input type="button" value="保存" onclick="javascript:dosave()">
+            </td>
+        </tr>
+    </form>
+</table>
+
+#parse("common/tablebot.vm")
+<br>
+<p>
+<script language="javascript">
+    function dosave(){
+        document.forms[0].submit();
+    }
+</script>

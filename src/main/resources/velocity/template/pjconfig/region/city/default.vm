@@ -1,0 +1,25 @@
+#parse("common/top.vm")
+#parse("common/locations.vm")
+城市代码管理
+#parse("common/locatione.vm")
+<p><br>
+<table width="490" border="0" height="275" background="$!request.getContextPath()/images/unicap/images/WELCOME.jpg">
+    <tr>
+
+
+        <td height="21" width="490" valign="top">
+            <table width="121" border="0">
+                <tr>
+                    <td>
+##                        <div align="center">城市代码管理</div>
+                    </td>
+                </tr>
+            </table>
+
+        <td height="21" width="1">&nbsp;</td>
+    </tr>
+    <tr>
+##        <td colspan="2" valign="top"> &nbsp; &nbsp; 城市代码管理...</td>
+    </tr>
+</table>
+#parse("common/bottom.vm")

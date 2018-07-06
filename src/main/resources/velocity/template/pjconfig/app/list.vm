@@ -1,0 +1,123 @@
+#set($tbtitle="应用列表")
+#set($queryUrl="$!request.getContextPath()/pjconfig/app/list.htm")
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+破解配置&gt;&gt; 应用列表
+#parse("common/locatione.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+<table class="tabletop">
+    <form action="/pjconfig/app/list.htm" method="post" name="topform">
+        <tr>
+            <td class="tabletop" align="left">
+                状态:
+                <select id="status" name="status" >
+                    <option value="0">全部</option>
+                    <option value="1"  #if($!query.status == 1) selected #end>启用</option>
+                    <option value="2" #if($!query.status == 2) selected #end>禁用</option>
+                </select>
+                类型:
+                <select id="type" name="type" >
+                    <option value="0">全部</option>
+                    <option value="1"  #if($!query.type == 1) selected #end>咪咕音乐</option>
+                    <option value="3" #if($!query.type == 3) selected #end>咪咕游戏</option>
+                    <option value="4" #if($!query.type == 4) selected #end>咪咕动漫</option>
+                    <option value="5" #if($!query.type == 5) selected #end>咪咕视频</option>
+                </select>
+                <input type="submit" value="提交">
+            </td>
+        </tr>
+    </form>
+</table>
+#if(${page.total} != 0)
+    #parse("common/pages.vm")
+    <input type="hidden" name="status" value="$!{query.status}">
+    <input type="hidden" name="type" value="$!{query.type}">
+    #parse("common/pagee.vm")
+#end
+
+#parse("common/tabletop.vm")
+<form action="" method="post" name="form1">
+    <table class="table1" cellspacing="0" cellpadding="0">
+        #if(${page.totalCount} == 0)
+            <tr>
+                <td class="td1line1" colspan="8">
+                    暂时没有记录
+                </td>
+            </tr>
+        #else
+            <tr>
+            <tr>
+                <td class="td1title2" align="center" nowrap>
+                    编号
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    app英文名
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    app中文名
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    应用类型
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    渠道ID
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    状态
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    修改时间
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    操作
+                </td>
+            </tr>
+            #foreach($item in $page.itemList)
+                <tr>
+                    <td class="td1line1" align="center" nowrap>
+                        $appUtils.getId($item.id)
+                    </td>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.ename
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $appUtils.getSimpleAppName($item.cname)
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        ${item.getTypeDisplay()}
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        ${item.channelId}
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        ${item.getStatusDisplay()}&nbsp;
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $!dateFormat.format('yyyy-MM-dd HH:mm:ss',$!{item.gmtUpdate})&nbsp;
+                    </td>
+                    <td class="td1line1" align="center" nowrap>
+                        #if(${item.canEnable()})
+                            <a href="$!request.getContextPath()/pjconfig/app/enable.htm?id=${item.id}">启用</a>&nbsp;
+                        #end
+                        #if(${item.canDisable()})
+                            <a href="$!request.getContextPath()/pjconfig/app/disable.htm?id=${item.id}">禁用</a>&nbsp;
+                        #end
+                        <a href="$!request.getContextPath()/pjconfig/chargepoint/list.htm?appPid=${item.id}">计费代码</a>&nbsp;
+
+                    </td>
+                </tr>
+            #end
+            <tr>
+                <td colspan="14" class="td1bottom" align="center">
+                    &nbsp;
+                </td>
+            </tr>
+        #end
+    </table>
+</form>
+
+<br>
+<p>
+#parse("common/bottom.vm")

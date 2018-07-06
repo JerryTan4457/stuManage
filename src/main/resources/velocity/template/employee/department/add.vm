@@ -1,0 +1,48 @@
+#set($tbtitle="新增部门")
+#set($imgServerUrl="http://121.43.110.174/picfs")
+#set($uploadField="#imgUrl")
+#parse("common/topartdialog.vm")
+#parse("common/locations.vm")
+权限管理&gt;&gt; <a href="$!request.getContextPath()/auth/role/list.htm">部门列表</a>&gt;&gt;新增部门
+#parse("common/locatione.vm")
+#parse("common/uploader.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+#parse("common/tabletop.vm")
+<table class="table1" cellspacing="0" cellpadding="0">
+    <form action="$!request.getContextPath()/auth/role/save.htm" method="post">
+        <tr>
+            <td class="td1name" width="140" align="left">部门名称:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="name" name="name" value="$!{role.name}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">部门编码:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="code" name="code" value="$!{role.code}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">部门信息:</td>
+            <td class="td1value" align="left">
+                <textarea id="memo" name="memo"   style="width: 240px;height: 80px">$!{role.memo}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="td1bottom" align="center" colspan="2">
+                <input type="button" value="保存" onclick="javascript:dosave()">
+            </td>
+        </tr>
+    </form>
+</table>
+
+#parse("common/tablebot.vm")
+<br>
+<p>
+<script language="javascript">
+    function dosave(){
+        document.forms[0].submit();
+    }
+</script>

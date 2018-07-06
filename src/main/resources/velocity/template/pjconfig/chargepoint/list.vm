@@ -1,0 +1,133 @@
+#set($tbtitle="计费代码列表")
+#set($queryUrl="$!request.getContextPath()/pjconfig/chargepoint/list.htm?appPid=$query.appPid")
+
+<link rel="stylesheet" type="text/css" href="$!request.getContextPath()/multiselect/jquery.multiselect.css" />
+<link rel="stylesheet" type="text/css" href="$!request.getContextPath()/multiselect/style.css" />
+<link rel="stylesheet" type="text/css" href="$!request.getContextPath()/multiselect/prettify.css" />
+<link rel="stylesheet" type="text/css" href="$!request.getContextPath()/multiselect/jquery-ui.css" />
+
+
+<script type="text/javascript" src="$!request.getContextPath()/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="$!request.getContextPath()/multiselect/jquery-ui.min.js"></script>
+<script type="text/javascript" src="$!request.getContextPath()/multiselect/prettify.js"></script>
+<script type="text/javascript" src="$!request.getContextPath()/multiselect/jquery.multiselect.js"></script>
+
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+破解配置&gt;&gt; #if($appDTO) <a href="#" onclick="history.back()">返回应用列表</a> #else 计费代码列表 #end
+#parse("common/locatione.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+
+#if(${page.total} != 0)
+    #parse("common/pages.vm")
+    #parse("common/pagee.vm")
+#end
+
+#parse("common/tabletop.vm")
+<form action="" method="post" name="form1">
+    <table class="table1" cellspacing="0" cellpadding="0">
+        #if(${page.totalCount} == 0)
+            <tr>
+                <td class="td1line1" colspan="8">
+                    暂时没有记录
+                </td>
+            </tr>
+        #else
+            <tr>
+                <td class="td1title2" align="center" nowrap>
+                    Id
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    应用编号
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    应用中文名
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    计费代码
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    渠道Id
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    状态
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    xtype
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    计费金额
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    限量方式
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    更新时间
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    操作
+                </td>
+            </tr>
+            #foreach($item in $page.itemList)
+                <tr>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.id
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $appUtils.getId($!item.appPid)
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $appUtils.getSimpleAppName($!item.appCname)
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        900$!item.payCode
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $!item.channelId
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $!item.getStatusDisplay()
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        #if(${item.xtype}==11)     包月
+                        #elseif(${item.xtype}==21) 点播
+                        #elseif(${item.xtype}==22) 振铃
+                        #elseif(${item.xtype}==23) 所有
+                        #elseif(${item.xtype}==24) 数字专辑
+                        #elseif(${item.xtype}==25) 按次
+                        #end
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $!item.itemPrice
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                            #if(${item.limitType}==0) 不限量    #end
+                            #if(${item.limitType}==1) 分省关停  #end
+                            #if(${item.limitType}==2) 限量关停  #end
+                    </td>
+
+                    <td class="td1line1" align="left" nowrap>
+                        $!dateFormat.format('yyyy-MM-dd HH:mm:ss',$!{item.gmtUpdate})&nbsp;
+                    </td>
+                    <td class="td1line1" align="center" nowrap>
+                    #if(${item.limitType}!=0)
+                        <a href="$!request.getContextPath()/pjconfig/appprovince/list.htm?chargePointId=${item.id}">限量配置</a>&nbsp;
+                    #end
+                    </td>
+
+                </tr>
+            #end
+            <tr>
+                <td colspan="20" class="td1bottom">
+                    &nbsp;
+                </td>
+            </tr>
+        #end
+    </table>
+</form>
+
+<br>
+<p>
+#parse("common/bottom.vm")

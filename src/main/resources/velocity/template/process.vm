@@ -1,0 +1,42 @@
+<html>
+<head></title>
+    <title>渠道省份进度表</title>
+    <meta http-equiv="Content-Type" content="application/vnd.wap.xhtml+xml; charset=utf-8" />
+    <style type="text/css">#tbl1 tr td{border:1px solid #bddaf4}.td01{text-align:center;padding:6px;}.td02{text-align:center;padding:8px;}.td03{text-align:center;padding:5px;}.td04{text-align:center;padding:5px;background-color:#FFFF99;}</style>
+</head>
+<body>
+#if($chargePointDTO)
+<table cellspacing="" cellpadding="0" id="tbl1">
+    <tbody>
+
+    <tr>
+        <td class="td01" colspan="2">$!appUtils.getSimpleAppName($!chargePointDTO.appCname)-$!{itemPrice}元</td>
+    </tr>
+    <tr>
+        <td class="td01">省份</td>
+        <td class="td01">进度</td>
+    </tr>
+    #foreach($item in $appProvinceDTOList)
+        #if($item.status==1)
+
+        <tr>
+            <td class="td01">
+                #foreach($province in $provinceCityDTOList)
+              #if( $item.provinceId == $province.id)
+                    $province.name
+                #end
+           #end
+
+            </td>
+            <td class="td01">
+                $!{appUtils.process($item.dailyLimit,$item.current)}%
+            </td>
+        </tr>
+
+        #end
+    #end
+    </tbody>
+</table>
+#end
+</body>
+</html>

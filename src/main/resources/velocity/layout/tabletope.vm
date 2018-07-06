@@ -1,0 +1,5 @@
+</ul>
+</div>
+</form>
+<!--右边表格开始-->
+<div class="list_title"><span class="title_w">$tbtitle</span><span><a href="javascript:add();"><img src="$!request.getContextPath()/images/btn_n01.png" /></a></span></div>

@@ -1,0 +1,83 @@
+#set($tbtitle="分省限量")
+#parse("common/topartdialog.vm")
+#parse("common/locations.vm")
+破解配置&gt;&gt; <a href="$!request.getContextPath()/pjconfig/chargepoint/list.htm?appPid=$!{chargePointDTO.id}">计费代码</a>&gt;&gt;  分省限量
+#parse("common/locatione.vm")
+#parse("common/uploader.vm")
+#parse("common/marco.vm")
+<br>
+<link rel="stylesheet" type="text/css" href="$!request.getContextPath()/chosen/chosen.css" />
+<script type="text/javascript" src="$!request.getContextPath()/chosen/jquery.min.js"></script>
+<script type="text/javascript" src="$!request.getContextPath()/chosen/chosen.jquery.js"></script>
+<script type="text/javascript">
+
+</script>
+<p>
+    <font class="message">$!msg</font><p>
+#parse("common/tabletop.vm")
+<table class="table1" cellspacing="0" cellpadding="0">
+    <form action="$!request.getContextPath()/pjconfig/appprovince/addbatch.htm" method="post" enctype="multipart/form-data">
+        <tr>
+            <td class="td1name" width="140" align="left">总日限:</td>
+            <td class="td1value" align="left">
+                <input  placeholder="" type="hidden" id="chargePointId" name="chargePointId" value="$!{chargePointDTO.id}" size="30" />
+                <input  placeholder="" type="text" id="totalLimit" name="totalLimit"  #if($!{form.totalLimit}>0) value="$!{form.totalLimit}" #end   size="30" />
+            </td>
+        </tr>
+
+        <tr>
+            <td class="td1name" width="140" align="left">开通省份:</td>
+            <td class="td1value" align="left">
+                <textarea id ="provinceNames" name="provinceNames" style="width: 500;height: 100" >$!{form.provinceNames}</textarea>
+                <input type="button" value="勾选" onclick="javascript:docheck()" style="">
+            </td>
+
+        </tr>
+
+
+        <tr>
+            <td class="td1name" width="140" align="left">勾选省份:</td>
+            <td class="td1value" align="left">
+                #foreach($province in $provinceCityDTOList)
+                     <input type="checkbox" name="provinceIds" value="$province.id" onclick="return false"
+                            #if($form.provinceIds.contains($province.id)) checked #end  >$province.name
+                     #if($velocityCount%12==0)
+                         </br>
+                     #end
+                #end
+            </td>
+        </tr>
+
+
+        <tr>
+            <td class="td1name" width="140" align="left">开通数量:</td>
+            <td class="td1value" align="left">
+                <input  placeholder="" type="text" id="provinceLimits" name="provinceLimits" value="$!form.provinceLimits" size="60" />
+                (每个省单独设置用,分开)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td class="td1bottom" align="center" colspan="2">
+                <input type="button" value="保存" onclick="javascript:dosave()">
+            </td>
+        </tr>
+    </form>
+</table>
+
+#parse("common/tablebot.vm")
+<br>
+<p>
+<script language="javascript">
+    function dosave(){
+        document.forms[0].action = "$!request.getContextPath()/pjconfig/appprovince/addbatch.htm"
+        document.forms[0].submit();
+    }
+    function docheck(){
+        document.forms[0].action = "$!request.getContextPath()/pjconfig/appprovince/forwardsetbatch.htm"
+        document.forms[0].submit();
+    }
+
+
+</script>

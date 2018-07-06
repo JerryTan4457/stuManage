@@ -1,0 +1,78 @@
+#set($tbtitle="编辑资源")
+#set($imgServerUrl="http://121.43.110.174/picfs")
+#set($uploadField="#imgUrl")
+#parse("common/topartdialog.vm")
+#parse("common/locations.vm")
+权限管理&gt;&gt; <a href="$!request.getContextPath()/auth/resource/list.htm">资源列表</a>&gt;&gt; 编辑资源
+#parse("common/locatione.vm")
+#parse("common/uploader.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+#parse("common/tabletop.vm")
+<table class="table1" cellspacing="0" cellpadding="0">
+    <form action="$!request.getContextPath()/auth/resource/modify.htm" method="post">
+        <input type="hidden" name="systemId" value="$!{system.id}">
+        <input type="hidden" name="id" value="$!{resource.id}">
+        <tr>
+            <td class="td1name" width="140" align="left">系统编码:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="systemCode" name="systemCode" value="$!{system.code}" size="30"  readonly/>
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">系统名称:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="systemName" name="systemName" value="$!{system.name}" size="30"  readonly/>
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">资源类型:</td>
+            <td class="td1value" align="left">
+                <select name="type">
+                    #foreach($resourceType in ${type.getResourceTypes()})
+                        <option value="${resourceType.getValue()}" #if(${resourceType.getValue()}==$!{resource.type}) selected #end>${resourceType.getText()}</option>
+                    #end
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">资源名称:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="name" name="name" value="$!{resource.name}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">资源编码:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="code" name="code" value="$!{resource.code}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">资源路径:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="urlPath" name="urlPath" value="$!{resource.urlPath}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">备注:</td>
+            <td class="td1value" align="left">
+                <textarea id="memo" name="memo"   style="width: 240px;height: 80px">$!{resource.memo}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="td1bottom" align="center" colspan="2">
+                <input type="button" value="保存" onclick="javascript:dosave()">
+            </td>
+        </tr>
+    </form>
+</table>
+
+#parse("common/tablebot.vm")
+<br>
+<p>
+<script language="javascript">
+    function dosave(){
+        document.forms[0].submit();
+    }
+</script>

@@ -1,0 +1,16 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<frameset id="fatherFrameset" name="fatherFrameset" cols="180,12,*" border="0" framespacing="0" frameborder="NO" rows="*"  noresize="yes">
+    <frame id="mainleft" name="mainleft" src="$!request.getContextPath()/frame/left.htm" scrolling="no" noresize="yes">
+    <frame id="mainmid" name="mainmid" src="$!request.getContextPath()/frame/mainmid.htm" scrolling="no" noresize="yes">
+    <frame id="mainright" name="mainright" src="$!request.getContextPath()/frame/right.htm">
+</frameset>
+<noframes>
+    <body bgcolor="#FFFFFF" text="#000000">
+    对不起，您的浏览器版本不支持框架！
+    </body>
+</noframes>
+</html>

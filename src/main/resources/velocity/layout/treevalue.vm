@@ -1,0 +1,39 @@
+<script>
+
+    var tree_tpl = {
+    'target'  : 'mainright',	// name of the frame links will be opened in
+    // other possible values are: _blank, _parent, _search, _self and _top
+
+    'icon_e'  : '$!request.getContextPath()/tree/images/empty.gif', // empty image
+    'icon_l'  : '$!request.getContextPath()/tree/images/line.gif',  // vertical line
+
+    'icon_32' : '$!request.getContextPath()/tree/images/base.gif',   // I add this,cause old error
+    'icon_36' : '$!request.getContextPath()/tree/images/base.gif',   // I add this,cause old error
+    'icon_48' : '$!request.getContextPath()/tree/images/base.gif',   // root icon normal
+    'icon_52' : '$!request.getContextPath()/tree/images/base.gif',   // root icon selected
+    'icon_56' : '$!request.getContextPath()/tree/images/base.gif',   // root icon opened
+    'icon_60' : '$!request.getContextPath()/tree/images/base.gif',   // root icon selected
+
+    'icon_16' : '$!request.getContextPath()/tree/images/folder.gif', // node icon normal
+    'icon_20' : '$!request.getContextPath()/tree/images/folderopen.gif', // node icon selected
+    'icon_24' : '$!request.getContextPath()/tree/images/folder.gif', // node icon opened
+    'icon_28' : '$!request.getContextPath()/tree/images/folderopen.gif', // node icon selected opened
+
+    'icon_0'  : '$!request.getContextPath()/tree/images/page.gif', // leaf icon normal
+    'icon_4'  : '$!request.getContextPath()/tree/images/page.gif', // leaf icon selected
+    'icon_8'  : '$!request.getContextPath()/tree/images/page.gif', // leaf icon opened
+    'icon_12' : '$!request.getContextPath()/tree/images/page.gif', // leaf icon selected
+
+    'icon_2'  : '$!request.getContextPath()/tree/images/joinbottom.gif', // junction for leaf
+    'icon_3'  : '$!request.getContextPath()/tree/images/join.gif',       // junction for last leaf
+    'icon_18' : '$!request.getContextPath()/tree/images/plusbottom.gif', // junction for closed node
+    'icon_19' : '$!request.getContextPath()/tree/images/plus.gif',       // junctioin for last closed node
+    'icon_26' : '$!request.getContextPath()/tree/images/minusbottom.gif',// junction for opened node
+    'icon_27' : '$!request.getContextPath()/tree/images/minus.gif'       // junctioin for last opended node
+    };
+
+    var tree_value = {
+    'treev' : 'treev'
+    };
+
+</script>

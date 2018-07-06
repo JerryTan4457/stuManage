@@ -1,0 +1,85 @@
+#set($tbtitle="省份列表")
+#set($queryUrl="$!request.getContextPath()/pjconfig/region/province/list.htm")
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+基础数据管理&gt;&gt; <a href="$!request.getContextPath()/pjconfig/region/province/list.htm">省份列表</a>
+#parse("common/locatione.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+
+#if(${page.total} != 0)
+    #parse("common/pages.vm")
+    #parse("common/pagee.vm")
+#end
+
+#parse("common/tabletop.vm")
+<form action="" method="post" name="form1">
+    <table class="table1" cellspacing="0" cellpadding="0">
+        #if(${page.totalCount} == 0)
+            <tr>
+                <td class="td1line1" colspan="8">
+                    暂时没有记录
+                </td>
+            </tr>
+        #else
+            <tr>
+                <td class="td1title2" align="center" nowrap>
+                    id
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    名称
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    创建时间
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    更新时间
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    状态
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    操作
+                </td>
+            </tr>
+            #foreach($item in $page.itemList)
+                <tr>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.id
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.name
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                       $!dateFormat.format('yyyy-MM-dd HH:mm:ss',$!{item.gmtCreate})&nbsp;
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $!dateFormat.format('yyyy-MM-dd HH:mm:ss',$!{item.gmtUpdate})&nbsp;
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        ${item.getStatusDisplay()}&nbsp;
+                    </td>
+                    <td class="td1line1" align="center" nowrap>
+##                        #if(${item.canEnable()})
+##                            <a href="$!request.getContextPath()/basedata/province/enable.htm?id=$item.id">启用</a>&nbsp;
+##                        #end
+##
+##                        #if(${item.canDisable()})
+##                            <a href="$!request.getContextPath()/basedata/province/disable.htm?id=$item.id">禁用</a>&nbsp;
+##                        #end
+                    </td>
+                </tr>
+            #end
+            <tr>
+                <td colspan="10" class="td1bottom">
+                    &nbsp;
+                </td>
+            </tr>
+        #end
+    </table>
+</form>
+
+<br>
+<p>
+#parse("common/bottom.vm")

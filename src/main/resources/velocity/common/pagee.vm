@@ -1,0 +1,48 @@
+#if(${page.totalCount} > 0)
+    #if (${page.totalPage} > 0)
+    &nbsp;&nbsp;
+    <select name="pages" onchange="javascript:showpage(document.pagenum.pages.options.selectedIndex)">
+        #set($datas=[1..$page.totalPage])
+        #foreach($i in $datas)
+            <option value="$i"
+                    #if(${page.pageNo}==$i){
+                    selected
+                    }
+                    #end
+                    >
+                $i页
+            </option>
+        #end
+    </select>
+    #end
+
+    </td>
+    </tr>
+    <tr>
+        <td colspan="3"  class="pagestable_td"></td>
+    </tr>
+    </form>
+    </table>
+
+
+    <script language="javascript">
+        function showpage(pageindexnum)
+        {
+            document.pagenum.pageNo.value = pageindexnum+1;
+            document.pagenum.submit();
+        }
+        function sort(propertyName,ascDesc)
+        {
+            document.pagenum.orderProp.value =  propertyName ;
+            document.pagenum.ascDesc.value =  ascDesc ;
+            document.pagenum.pageNo.value = 1;
+            document.pagenum.submit();
+        }
+    </script>
+    </td>
+    </tr>
+    </table>
+#end
+
+
+

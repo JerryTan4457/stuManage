@@ -1,0 +1,43 @@
+#if(${page.totalCount} > 0)
+    <table class="table1pagestable">
+    <tr>
+    <td>
+    <table class="pagestable">
+    <form name="pagenum" action="${queryUrl}" method="post">
+        <input type="hidden" name="pageNo" value="${page.pageNo}">
+    <tr>
+        <td width="20%" align="left" nowrap>
+            共${page.totalPage}页,${page.totalCount}项 &nbsp;当前页:第(${page.pageNo})页
+        </td>
+        <td align="center" nowrap>
+            <a href="javascript:showpage(0)">第一页</a>
+            |&nbsp;
+            #if (${page.pageNo} > 1)
+             #set($preno=$page.pageNo+(-2))
+            <a href="javascript:showpage(${preno})">
+            #end
+            上一页
+            #if (${page.pageNo} > 1)
+            </a>
+            #end
+            |&nbsp;
+            #set($curno=$page.pageNo+(-1))
+            <a href="javascript:showpage(${curno})">刷新</a>
+            |&nbsp;
+
+            #if ((${page.pageNo}) < ${page.totalPage})
+                #set($nextno=$page.pageNo)
+            <a href="javascript:showpage(${nextno})">
+            #end
+            下一页
+            #if ((${page.pageNo}) < ${page.totalPage})
+            </a>
+            #end
+            |&nbsp;
+            #set($lastno=$page.totalPage+(-1))
+            <a href="javascript:showpage(${lastno})">最后页</a>  &nbsp;
+        </td>
+    <td align="right" width="20%" nowrap>
+#end
+
+

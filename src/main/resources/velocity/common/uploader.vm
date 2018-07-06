@@ -1,0 +1,35 @@
+<SCRIPT type="text/javascript">
+
+    var xmlHttpRequest = new XMLHttpRequest();
+
+
+    function uploadImg(obj){
+//        $("#fileName").val(obj.value);
+        var file = obj.files[0];
+        var name = file.name;
+        var size = file.size;
+        var type = file.type;
+
+
+
+        if(!/image\/\w+/.test(type)){
+            alert("请确保文件为图像类型");
+            return false;
+        }
+        var formData = new FormData();
+        formData.append(name, file);
+
+        xmlHttpRequest.open("POST", "$!request.getContextPath()/upload.htm");
+        xmlHttpRequest.send(formData);
+        xmlHttpRequest.onreadystatechange = function (){
+            if(xmlHttpRequest.readyState ==4 && xmlHttpRequest.status ==200){
+                var msg= JSON.parse(xmlHttpRequest.response);
+                var field = msg[name];
+                $('$!{uploadField}').val(field);
+                $('#imgBox').attr('src', '$imgServerUrl'+'/'+field);
+            }
+        };
+
+    }
+
+</SCRIPT>

@@ -1,0 +1,133 @@
+#set($tbtitle="系统列表")
+#set($imgServerUrl="http://121.43.110.174/picfs")
+#set($queryUrl="$!request.getContextPath()/auth/system/list.htm")
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+权限管理&gt;&gt; <a href="$!request.getContextPath()/auth/system/add.htm">新增系统</a>
+#parse("common/locatione.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+<table class="tabletop">
+    <form action="$!request.getContextPath()/auth/system/list.htm" method="post" name="topform">
+        <tr>
+            <td class="tabletop" align="left">
+                系统名称:
+                <input type="text" placeholder="系统名称"  class="span2" value="$!query.name" name="name" id="name" />
+                状态:
+                <select id="status" name="status" >
+                    <option value="0">全部</option>
+                    <option value="1"  #if($!query.status == 1) selected #end>启用</option>
+                    <option value="2" #if($!query.status == 2) selected #end>禁用</option>
+                </select>
+                <input type="submit" value="提交">
+            </td>
+        </tr>
+    </form>
+</table>
+#if(${page.total} != 0)
+    #parse("common/pages.vm")
+    <input type="hidden" name="name" value="$!{query.name}">
+    <input type="hidden" name="status" value="$!{query.status}">
+    #parse("common/pagee.vm")
+#end
+
+#parse("common/tabletop.vm")
+<form action="" method="post" name="form1">
+    <table class="table1" cellspacing="0" cellpadding="0">
+        #if(${page.totalCount} == 0)
+            <tr>
+                <td class="td1line1" colspan="8">
+                    暂时没有记录
+                </td>
+            </tr>
+        #else
+            <tr>
+                <td class="td1title2" align="center" nowrap>
+                    id
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    名称
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    编码
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    访问路径
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    扩展路径
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    备注
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    状态
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    创建时间
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    更新时间
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    操作
+                </td>
+            </tr>
+            #foreach($item in $page.itemList)
+                <tr>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.id
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.name
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.code
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.domainPath
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        ${item.extdomainPath}&nbsp;
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $!{item.memo}&nbsp;
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        ${item.getStatusDisplay()}&nbsp;
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                       $!dateFormat.format('yyyy-MM-dd HH:mm:ss',$!{item.gmtCreate})&nbsp;
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $!dateFormat.format('yyyy-MM-dd HH:mm:ss',$!{item.gmtUpdate})&nbsp;
+                    </td>
+                    <td class="td1line1" align="center" nowrap>
+                        #if(${item.canEdit()})
+                            <a href="$!request.getContextPath()/auth/system/edit.htm?id=$item.id">编辑</a>&nbsp;
+                        #end
+
+                        #if(${item.canEnable()})
+                            <a href="$!request.getContextPath()/auth/system/enable.htm?id=$item.id">启用</a>&nbsp;
+                        #end
+
+                        #if(${item.canDisable()})
+                            <a href="$!request.getContextPath()/auth/system/disable.htm?id=$item.id">禁用</a>&nbsp;
+                        #end
+                        <a href="$!request.getContextPath()/auth/system/resource/list.htm?systemId=$item.id">设置资源</a>&nbsp;
+                    </td>
+                </tr>
+            #end
+            <tr>
+                <td colspan="10" class="td1bottom">
+                    &nbsp;
+                </td>
+            </tr>
+        #end
+    </table>
+</form>
+
+<br>
+<p>
+#parse("common/bottom.vm")

@@ -1,0 +1,7 @@
+#macro(showValidateError $modleName $fieldName)
+    #if($springMacroRequestContext.getErrors($modleName))
+        #set($path=${modleName}+"."+${fieldName})
+        #springBind($path)
+    <span style="color: red"> $status.errorMessage </span>
+    #end
+#end

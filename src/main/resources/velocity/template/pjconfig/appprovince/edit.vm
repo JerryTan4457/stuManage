@@ -1,0 +1,158 @@
+#set($tbtitle="计费代码")
+<link rel="stylesheet" type="text/css" href="$!request.getContextPath()/chosen/chosen.css" />
+<script type="text/javascript" src="$!request.getContextPath()/chosen/jquery.min.js"></script>
+<script type="text/javascript" src="$!request.getContextPath()/chosen/chosen.jquery.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.chosen-select').chosen({
+            inherit_select_classes:true,
+             search_contains:true
+        });
+    });
+</script>
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+破解配置&gt;&gt; 分省限量  &gt;&gt; <a href="$!request.getContextPath()/pjconfig/appprovince/setbatch.htm?chargePointId=${chargePointDTO.id}">批量变更</a>
+#parse("common/locatione.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+
+#parse("common/tabletop.vm")
+<table class="table1" cellspacing="0" cellpadding="0">
+    <tr>
+        <td class="td1name" width="140" align="left">应用名称:</td>
+        <td class="td1value" align="left"  ">
+            $!{chargePointDTO.appCname}
+        </td>
+        <td class="td1name" width="140" align="left">英文名称:</td>
+        <td class="td1value" align="left" >
+            $!{chargePointDTO.appEname}
+        </td>
+    </tr>
+
+    <tr>
+        <td class="td1name" width="140" align="left">计费代码:</td>
+        <td class="td1value" align="left" >
+            $!{chargePointDTO.payCode}
+        </td>
+        <td class="td1name" width="140" align="left">计费Id:</td>
+        <td class="td1value" align="left" >
+            $!{chargePointDTO.id}
+        </td>
+    </tr>
+
+    <tr>
+        <td class="td1name" width="140" align="left">总日限:</td>
+        <td class="td1value" placeholderalign="left" colspan="3">
+            #if($!{chargePointDTO.dailyLimit}==0)
+               未限量
+            #else
+                $!{chargePointDTO.dailyLimit}
+            #end
+        </td>
+    </tr>
+</table>
+
+<form method="post" action="$!request.getContextPath()/pjconfig/appprovince/save.htm">
+<table class="tablebtm" cellspacing="0" cellpadding="0">
+        <tr>
+            <td  class="td1namebtm" colspan="13">
+                开通省份
+            </td>
+        </tr>
+        #if(${appProvinceDTOList.size()} == 0)
+            <tr>
+                <td class="td1line1" colspan="8">
+                    当前未设置分省限量
+                </td>
+            </tr>
+        #else
+            <tr>
+            <tr>
+                <td class="td1title2" align="center" nowrap>
+                    省份
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    日限量
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    当前数量
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    状态
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    操作
+                </td>
+            </tr>
+            #foreach($item in $appProvinceDTOList)
+                <tr>
+                    <td class="td1line1" align="center" nowrap>
+                        #foreach($province in $provinceCityDTOList)
+                             #if( $item.provinceId == $province.id)
+                            $province.name
+                        #end
+                         #end
+                    </td>
+                    <td class="td1line1" align="center" nowrap>
+                       #if($item.id==$appProvinceDTO.id)
+                           <input type="input" value="${appProvinceDTO.dailyLimit}" name ="dailyLimit">
+                           <input type="hidden" value="${appProvinceDTO.id}" name ="id">
+                           <input type="hidden" value="${appProvinceDTO.chargePointId}" name ="chargePointId">
+
+                       #else
+                           $item.dailyLimit
+                       #end
+                    </td>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.current
+                    </td>
+                    <td class="td1line1" align="center" nowrap>
+                        #if($item.status==1)
+                           启用
+                        #elseif($item.status==2)
+                           禁用
+                        #elseif($item.status==3)
+                            限通
+                        #end
+
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                    #if($item.id==$appProvinceDTO.id)
+                        <input type="button" value="保存" onclick="javascript:dosave()">
+                    #else
+
+                    <a href="$!request.getContextPath()/pjconfig/appprovince/edit.htm?id=$item.id">编辑</a>
+                        #if($item.status==1)
+                          <a href="$!request.getContextPath()/pjconfig/appprovince/disable.htm?id=$item.id">禁用</a>
+                         #end
+                        #if($item.status==2)
+                            <a href="$!request.getContextPath()/pjconfig/appprovince/enable.htm?id=$item.id">启用</a>
+                        #end
+                        #if($item.status==3)
+                            <a href="$!request.getContextPath()/pjconfig/appprovince/disable.htm?id=$item.id">禁用</a>
+                            <a href="$!request.getContextPath()/pjconfig/appprovince/enable.htm?id=$item.id">启用</a>
+                        #end
+                     #end
+
+                    </td>
+                </tr>
+            #end
+            <tr>
+                <td colspan="14" class="td1bottom" align="center">
+                    &nbsp;
+                </td>
+            </tr>
+        #end
+ </table>
+</form>
+<br>
+<p>
+#parse("common/bottom.vm")
+
+<script language="javascript">
+   function dosave(){
+       document.forms[0].submit();
+   }
+</script>

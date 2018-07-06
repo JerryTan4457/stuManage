@@ -1,0 +1,78 @@
+#set($tbtitle="角色授权")
+#set($imgServerUrl="http://121.43.110.174/picfs")
+#set($uploadField="#imgUrl")
+#parse("common/topartdialog.vm")
+#parse("common/locations.vm")
+权限管理&gt;&gt; <a href="$!request.getContextPath()/auth/role/list.htm">角色列表</a>&gt;&gt;角色授权
+#parse("common/locatione.vm")
+#parse("common/uploader.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+#parse("common/tabletop.vm")
+<table class="table1" cellspacing="0" cellpadding="0">
+        <form method="post" action="$!request.getContextPath()/auth/roleres/save.htm">
+            <input type="hidden" name="roleId" value="${role.id}">
+
+            #foreach($item in $grant.systemDTOList)
+                 <tr>
+                    <td class="td1line1" align="left" nowrap="nowrap">
+                        $!item.name &nbsp;
+                    </td>
+                     <td class="td1line2" align="left">
+                         #foreach($resource in ${grant.getResources(${item.id.toString()})})
+                             <span class="tabSpan"><input class="inputCheckBox" type="checkbox" name="resource" value="${resource.id}" #if($grant.checkPrivilege(${resource.code})) checked #end> ${resource.name}</span>
+                         #end
+                     </td>
+                </tr>
+            #end
+            <tr>
+                <td class="td1bottom" colspan="2" align="center">
+                    <input type="submit" value="保存">
+                    &nbsp; &nbsp; &nbsp;
+                    <input type="reset" value="重置">
+                </td>
+            </tr>
+        </form>
+</table>
+#parse("common/tablebot.vm")
+<br>
+<p>
+<script language="javascript">
+    function dosave(){
+        document.forms[0].submit();
+    }
+
+    function setall(allbox)
+    {
+        var dom=document.all;
+        if(allbox.checked)
+        {
+            for(i=0;i<dom.length;i++)
+            {
+                if (dom[i].name=="resource")
+                {
+                    dom[i].checked=true;
+                }
+                else if (dom[i].name=="audit")
+                {
+                    dom[i].checked=true;
+                }
+            }
+        }
+        else
+        {
+            for(i=0;i<dom.length;i++)
+            {
+                if (dom[i].name=="resource")
+                {
+                    dom[i].checked=false;
+                }
+                else if (dom[i].name=="audit")
+                {
+                    dom[i].checked=false;
+                }
+            }
+        }
+    }
+</script>

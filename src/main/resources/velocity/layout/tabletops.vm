@@ -1,0 +1,6 @@
+<table cellpadding="0" cellspacing="0" border="0" class="main">
+    <td class="main_right" valign="top">
+        <form class="form-inline" id="doctorQuery" nae="doctorQuery" method="post" action="$queryUrl" >
+        <!--右边内容搜索开始-->
+        <div class="Auditing_search">
+            <ul>

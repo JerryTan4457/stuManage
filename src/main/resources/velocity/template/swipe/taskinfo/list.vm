@@ -1,0 +1,144 @@
+#set($tbtitle="任务列表")
+#set($queryUrl="$!request.getContextPath()/swipe/taskinfo/list.htm")
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+刷卡任务&gt;&gt; 任务列表 &gt;&gt; <a href="$!request.getContextPath()/swipe/taskinfo/add.htm">新增任务</a>
+#parse("common/locatione.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+<table class="tabletop">
+    <form action="/swipe/taskinfo/list.htm" method="post" name="topform">
+        <tr>
+            <td class="tabletop" align="left">
+                任务名称:
+                <input type="text" placeholder="任务名称"  class="span2" value="$!query.title" name="title" id="title" />
+                状态:
+                <select id="status" name="status" >
+                    <option value="全部">--请选择--</option>
+                    <option value="0" #if($!query.status == 0) selected #end >编辑</option>
+                    <option value="1" #if($!query.status == 1) selected #end>启用</option>
+                    <option value="2" #if($!query.status == 2) selected #end>停用</option>
+                    <option value="3" #if($!query.status == 3) selected #end>完成</option>
+                </select>
+                <input type="submit" value="提交">
+            </td>
+        </tr>
+    </form>
+</table>
+#if(${page.total} != 0)
+    #parse("common/pages.vm")
+    <input type="hidden" name="name" value="$!{query.name}">
+    #if(${query.status})
+       <input type="hidden" name="status" value="$!{query.status}">
+    #end
+    #parse("common/pagee.vm")
+#end
+
+#parse("common/tabletop.vm")
+<form action="" method="post" name="form1">
+    <table class="table1" cellspacing="0" cellpadding="0">
+        #if(${page.totalCount} == 0)
+            <tr>
+                <td class="td1line1" colspan="8">
+                    暂时没有记录
+                </td>
+            </tr>
+        #else
+            <tr>
+            <tr>
+                <td class="td1title2" align="center" nowrap>
+                    编号
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    任务名称
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    刷卡商
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    资费
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    单价
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    完成数量
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                   任务数量
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    状态
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    发布时间
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    操作
+                </td>
+            </tr>
+            #foreach($item in $page.itemList)
+                <tr>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.id
+                    </td>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.title
+                    </td>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.cardUsername
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.charges
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.univalent
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.dCount
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.maxCount
+                    </td>
+
+                    <td class="td1line1" align="left" nowrap>
+                        $item.getStatusDisplay()
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        #if($item.pulishDate)
+                            $!dateFormat.format('yyyy-MM-dd',$!item.pulishDate)&nbsp;
+                        #end
+                    </td>
+                    <td class="td1line1" align="center" nowrap>
+                        #if($item.status == 0)
+                           <a href="$!request.getContextPath()/swipe/taskinfo/pub.htm?id=$item.id">发布</a>
+                           <a href="$!request.getContextPath()/swipe/taskinfo/edit.htm?id=$item.id">编辑</a>
+                           <a href="$!request.getContextPath()/swipe/taskinfo/del.htm?id=$item.id">删除</a>
+                        #end
+
+                        #if($item.status == 1)
+                            <a href="$!request.getContextPath()/swipe/taskinfo/disable.htm?id=$item.id">停用</a>
+                        #end
+
+                        #if($item.status == 2)
+                            <a href="$!request.getContextPath()/swipe/taskinfo/edit.htm?id=$item.id">编辑</a>
+                            <a href="$!request.getContextPath()/swipe/taskinfo/enable.htm?id=$item.id">启用</a>
+                        #end
+
+                        <a href="$!request.getContextPath()/swipe/taskstep/list.htm?taskId=$item.id">任务步骤</a>
+                    </td>
+                </tr>
+            #end
+            <tr>
+                <td colspan="14" class="td1bottom" align="center">
+                    &nbsp;
+                </td>
+            </tr>
+        #end
+    </table>
+</form>
+
+<br>
+<p>
+#parse("common/bottom.vm")

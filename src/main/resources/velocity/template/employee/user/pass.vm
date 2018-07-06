@@ -1,0 +1,76 @@
+#set($tbtitle="新增用户")
+#set($imgServerUrl="http://121.43.110.174/picfs")
+#set($uploadField="#imgUrl")
+#parse("common/topartdialog.vm")
+#parse("common/locations.vm")
+权限管理&gt;&gt; 用户管理&gt;&gt; 修改密码
+#parse("common/locatione.vm")
+#parse("common/uploader.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+#parse("common/tabletop.vm")
+<table class="table1" cellspacing="0" cellpadding="0">
+    <form action="$!request.getContextPath()/auth/user/passmodify.htm" method="post">
+        <input type="hidden" name="userId" value="$!{user.userId}">
+
+        <tr>
+            <td class="td1name" width="140" align="left">手机号码:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="phone" name="phone" value="$!{user.phone}" size="30"  disabled/>
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">用户昵称:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="username" name="username" value="$!{user.username}" size="30"  disabled/>
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">用户姓名:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="fullName" name="fullName" value="$!{user.fullName}" size="30"  disabled/>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="td1name" width="140" align="left">用户角色:</td>
+            <td class="td1value" align="left">
+                <input type="text" id="rolex" name="rolex" value="$!{user.role.name}" size="30"  disabled/>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="td1name" width="140" align="left">重置前密码:</td>
+            <td class="td1value" align="left">
+                <input type="password" id="password" name="password"  size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">重置后密码:</td>
+            <td class="td1value" align="left">
+                <input type="password" id="password1" name="password1"  size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">重置后密码:</td>
+            <td class="td1value" align="left">
+                <input type="password" id="password2" name="password2"  size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1bottom" align="center" colspan="2">
+                <input type="button" value="保存" onclick="javascript:dosave()">
+            </td>
+        </tr>
+    </form>
+</table>
+
+#parse("common/tablebot.vm")
+<br>
+<p>
+<script language="javascript">
+    function dosave(){
+        document.forms[0].submit();
+    }
+</script>

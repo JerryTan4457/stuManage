@@ -1,0 +1,64 @@
+#set($tbtitle="新增任务")
+#parse("common/topartdialog.vm")
+#parse("common/locations.vm")
+破解配置&gt;&gt; <a href="$!request.getContextPath()/swipe/taskinfo/list.htm">任务列表</a>&gt;&gt; 新增任务
+#parse("common/locatione.vm")
+#parse("common/uploader.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+#parse("common/tabletop.vm")
+<table class="table1" cellspacing="0" cellpadding="0">
+    <form action="$!request.getContextPath()/swipe/taskinfo/save.htm" method="post">
+        <tr>
+            <td class="td1name" width="140" align="left">任务名称:</td>
+            <td class="td1value" align="left">
+                <input placeholder="任务名称" type="text" id="title" name="title" value="$!{taskInfoDTO.title}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">刷卡商:</td>
+            <td class="td1value" align="left">
+                <input  placeholder="刷卡商" type="text" id="cardUsername" name="cardUsername" value="$!{taskInfoDTO.cardUsername}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">单价:</td>
+            <td class="td1value" align="left">
+                <input  placeholder="单价" type="text" id="univalent" name="univalent" value="$!{taskInfoDTO.univalent}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">资费:</td>
+            <td class="td1value" align="left">
+                <input  placeholder="资费" type="text" id="charges" name="charges" value="$!{taskInfoDTO.charges}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">任务数量:</td>
+            <td class="td1value" align="left">
+                <input  placeholder="任务数量" type="text" id="maxCount" name="maxCount" value="$!{taskInfoDTO.maxCount}" size="30" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td1name" width="140" align="left">备注:</td>
+            <td class="td1value" align="left">
+                <textarea id="mark" name="mark"   style="width: 240px;height: 80px">备注:</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="td1bottom" align="center" colspan="2">
+                <input type="button" value="保存" onclick="javascript:dosave()">
+            </td>
+        </tr>
+    </form>
+</table>
+
+#parse("common/tablebot.vm")
+<br>
+<p>
+<script language="javascript">
+    function dosave(){
+        document.forms[0].submit();
+    }
+</script>

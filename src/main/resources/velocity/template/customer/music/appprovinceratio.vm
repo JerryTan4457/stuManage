@@ -1,0 +1,67 @@
+#set($tbtitle="音乐转化率")
+#set($imgServerUrl="http://121.43.110.174/picfs")
+#set($queryUrl="$!request.getContextPath()/auth/system/list.htm")
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+客服系统
+#parse("common/locatione.vm")
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+
+#parse("common/tabletop.vm")
+<form action="" method="post" name="form1">
+    <table class="table1" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="td1title2" align="center" nowrap>
+                    省份
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    计费请求数
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    计费用户数
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    计费成功数
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    请求转化率
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    用户转化率
+                </td>
+            </tr>
+            #foreach($item in $transRatioList)
+                <tr>
+                    <td class="td1line1" align="center" nowrap>
+                        $item.provinceName
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.reqNum
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.userNum
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $item.transSucc
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        ${item.reqRate}%
+                    </td>
+                    <td class="td1line1" align="left" nowrap>
+                        $!{item.userRate}%
+                    </td>
+                </tr>
+            #end
+            <tr>
+                <td colspan="10" class="td1bottom">
+                    &nbsp;
+                </td>
+            </tr>
+    </table>
+</form>
+
+<br>
+<p>
+#parse("common/bottom.vm")

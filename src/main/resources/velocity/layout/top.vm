@@ -1,0 +1,11 @@
+<!--头部-->
+<table cellpadding="0" cellspacing="0" border="0" width="100%" class="top">
+    <tr>
+        <td width="220"><img src="$!request.getContextPath()/images/logo.png" /></td>
+        <td></td>
+        <td width="220" align="right" valign="top">
+            <div class="day_time"><span>您好:冯天天</span>| <span>2012年7月15日</span> <span>星期三</span><span>[ <a href="">退出</a> ]</span></div>
+        </td>
+    </tr>
+</table>
+<!--头部-->

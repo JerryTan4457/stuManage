@@ -1,0 +1,204 @@
+#set($tbtitle="员工信息管理")
+#set($imgServerUrl="http://121.43.110.174/picfs")
+#set($queryUrl="$!request.getContextPath()/trans/actualrescode.htm")
+
+<link rel="stylesheet" type="text/css" href="/search/jquery.searchableSelect.css">
+<script type="text/javascript" src="$!request.getContextPath()/search/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="$!request.getContextPath()/search/jquery.searchableSelect.js"></script>
+<script>
+    $(function(){
+        $(".search-select").searchableSelect();
+    });
+</script>
+
+<script src="$!request.getContextPath()/My97DatePicker/calendar.js" type="text/javascript"></script>
+<script src="$!request.getContextPath()/My97DatePicker/config.js" type="text/javascript"></script>
+<script src="$!request.getContextPath()/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+
+#parse("common/topthick.vm")
+#parse("common/locations.vm")
+员工信息管理&gt;&gt; <a href="$!request.getContextPath()/trans/actualrescode.htm" onclick="lwindow=LockWindow()">实习员工</a>
+#parse("common/locatione.vm")
+#set($left="(")
+#set($right=")")
+#set($tiAft=":00")
+#set($tiPre="0")
+##页面锁定js
+<script language="JavaScript">
+    var lwindow;
+    function LockWindow() {
+        var div = document.createElement("DIV");
+        div.id = "MzLockWindow_" + "_" + new Date().getTime();
+        with (div.style) {
+            zIndex = 10000;
+            top = "0px";
+            left = "0px";
+            width = "100%";
+            height = "100%";
+            border = "none";
+            margin = padding = 0;
+            position = "absolute";
+            backgroundImage = "url($!request.getContextPath()/images/wait.gif)";
+            backgroundRepeat = "no-repeat";
+            backgroundPositionX = "center";
+            backgroundpositionY = "center";
+            backgroundPosition = "center";
+            filter = "progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=60)";
+            backgroundColor = "white";
+            opacity = 0.3;
+            filter = "alpha(opacity=50)";
+            mozOpacity = 0.3;
+        }
+        document.body.insertBefore(div, document.body.firstChild);
+        return div;
+    }
+    function UnlockWindow(obj) {
+        if (obj) {
+            document.body.removeChild(obj);
+        }
+    }
+    window.onload=UnlockWindow(lwindow);
+</script>
+
+<br>
+<p>
+    <font class="message">$!msg</font><p>
+<table class="tabletop">
+    <form action="$!request.getContextPath()/trans/actualrescode.htm" method="post" name="topform">
+        <tr>
+            <input type="hidden" name="userName" value="$!{query.userName}">
+            <td class="tabletop" align="left">
+                部门:
+                <select class="search-select" name="type" id="type" data-placeholder="视频" style="width:100px;" >
+                    #foreach($item in ${appType.keySet()})
+                        #if($item==$!query.choseType)
+                            <option selected="selected" value="$item">${appType.get($item)}</option>
+                        #else
+                            <option value="$item">${appType.get($item)}</option>
+                        #end
+                    #end
+                </select>&nbsp;
+                职位:
+                <select class="search-select" name="provinceId" id="provinceId" data-placeholder="全部" style="width:100px;" >
+                    <option value="">请选择职位</option>
+                    #foreach($item in ${province.keySet()})
+                        #if($item==$!query.choseProvinceId)
+                            <option selected="selected" value="$item">${province.get($item)}</option>
+                        #else
+                            <option value="$item">${province.get($item)}</option>
+                        #end
+                    #end
+                </select>&nbsp;
+
+                分组:
+                <select class="search-select" name="groupType" id="groupType" data-placeholder="错误码" style="width:100px;" >
+                    #foreach($item in ${groupTP.keySet()})
+                        #if($item==$!query.choseGroupType)
+                            <option selected="selected" value="$item">${groupTP.get($item)}</option>
+                        #else
+                            <option value="$item">${groupTP.get($item)}</option>
+                        #end
+                    #end
+                </select>&nbsp;
+                请输入员工姓名或身份证号码:
+                #if($query.errCode != "")
+                    <input type="text" name="errCode" value="$query.errCode" id="errCode" style="width: 100px;height: 22px"/>&nbsp;
+                #else
+                    <input type="text" name="errCode" id="errCode" style="width: 100px;height: 22px"/>&nbsp;
+                #end
+                <input type="submit" value="搜索" onclick="lwindow=LockWindow()"/>
+            </td>
+        </tr>
+    </form>
+</table>
+#if(${page.total} != 0)
+    #parse("common/pages.vm")
+<input type="hidden" name="userName" value="$!{query.userName}">
+<input type="hidden" name="sex" value="$!{query.sex}">
+<input type="hidden" name="dHour" value="$!{query.dHour}">
+<input type="hidden" name="type" value="$!{query.type}">
+<input type="hidden" name="errCode" value="${query.errCode}">
+<input type="hidden" name="groupType" value="$!{query.groupType}">>
+    #parse("common/pagee.vm")
+#end
+
+#parse("common/tabletop.vm")
+<form action="" method="post" name="form1">
+    <table class="table1" cellspacing="0" cellpadding="0">
+        #if(${page.totalCount} == 0)
+            <tr>
+                <td class="td1line1" colspan="8">
+                    暂时没有记录
+                </td>
+            </tr>
+        #else
+            <tr>
+                <td class="td1title2" align="left" nowrap>
+                    编号
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    姓名
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    性别
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    身份证
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    上岗日期
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    所属部门
+                </td>
+                <td class="td1title2" align="center" nowrap>
+                    所属职位
+                </td>
+                <td class="td1title2" align="right" nowrap>
+                    操作
+                </td>
+            </tr>
+            #foreach($item in $page.itemList)
+                <tr>
+                    <td class="td1line1" align="left">
+                        $!item.groupName
+                    </td>
+                    <td class="td1line1" align="center">
+                        $!item.groupName2
+                    </td>
+                    <td class="td1line1" align="center">
+                        $!numberFormat.format('###,###,##0',$!{item.reqNum})
+                    </td>
+                    <td class="td1line1" align="center">
+                        $!item.ErrorRate%
+                    </td>
+                </tr>
+            #end
+            <tr>
+                <td class="td1line1" align="left" nowrap>
+                    <strong>$!total.name</strong>
+                </td>
+                <td class="td1line1" align="center" nowrap>
+                    <strong>$!total.sex</strong>
+                </td>
+                <td class="td1line1" align="center" nowrap>
+                    <strong>$!total.IDNumber</strong>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="12" class="td1bottom">
+                    &nbsp;
+                </td>
+
+##                <td colspan="12" class="tdlbottom">
+##                    &nbsp;
+##                </td>
+
+            </tr>
+        #end
+    </table>
+</form>
+
+<br>
+<p>
+    #parse("common/bottom.vm")
